@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -42,7 +43,7 @@ public class Grafo {
 	}
 
 	public void buscaExtensão(Grafo g, String vertice) {
-		Stack<String> pilha = new Stack<String>();
+		List<String> fila = new LinkedList<String>();
 
 		// creating a hash table
 		Map<String, String> cor = new HashMap<String, String>();
@@ -55,17 +56,17 @@ public class Grafo {
 			d.put(u, Integer.MAX_VALUE);
 		}
 
-		pilha.push(vertice);
+		fila.add(vertice);
 		cor.replace(vertice, "cinza");
 		ante.replace(vertice, null);
 		d.replace(vertice, 0);
 
-		while (!pilha.empty()) {
-			String now = pilha.pop();
+		while (!fila.isEmpty()) {
+			String now = fila.remove(0);
 
 			for (String adj : g.vetor.get(now)) {
 				if (cor.get(adj).compareTo("branco") == 0) {
-					pilha.push(adj);
+					fila.add(adj);
 					cor.replace(adj, "cinza");
 					ante.replace(adj, now);
 					d.replace(adj, d.get(now) + 1);
